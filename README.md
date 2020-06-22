@@ -1,54 +1,64 @@
 # DeathBellCTFWriteup
+
 Death Bell CTF Writeup by Siddhant Chouhan
 CSE-CSF
 
-
+## Misc: Rules
+```
 From the Rules Page: Inspect the page, s3ntinel{let_the_game_begin}         
+```
+## Stegno:Ohh
+```
+just strings and grep
+<rdf:li>s3ntinel{m3t@_d@t@_@g@1n}</rdf:li>
+```
 
-stegno: oohh: strings and grep
-	 <rdf:li>s3ntinel{m3t@_d@t@_@g@1n}</rdf:li>
-	
+## Stegno:Error
+```
+We are given a transparent background image of cyber sentinel logo i used foto forensics website and found that there was some text on the left side but i couldnt read it so i used the hidden pixels feature on their website and got the flag.
 
-stegno: error:
-We are given a transparent background image of cyber sentinel logo i used foto forensics website and found that there was some text on the 
-left side but i couldnt read it so i used the hidden pixels feature on their website and got the flag.
-  s3ntinel{Y0u_@r3_M@gn!fi3r}
-
-Misc: Am i invisible
+s3ntinel{Y0u_@r3_M@gn!fi3r}
+```
+## Misc: Am i invisible
+```
 use  zsteg -a h1 anatony.png
-
 we can partially see the flag lets extract that header.
 zsteg  anatony.png -E b1,bgr,lsb,xy  > output8.txt
 strings and grep the flag. s3ntinel{B3ing_invisib1e_i5_lit_4f_18723}
+```
 
-stegno: Preety Sweet,
+## Stegno: Preety Sweet
+```
 we are given a jpg image but when we open it, it says there is some error in image this means that the  image headers are wrong so lets manually correct them
 open hexeditor and correct the headers, later a hint was given What's a hotel room called? answer to that will be suite so found out that there's a tool called
 stegosuite used it, put the password suite and got the flag.  s3ntinel{st3g0_1s_aws0m3_19570}
-		
-OSINT:
-gitcom
-In this challenge we have to stalk vibhu sir xD opened github profile for the username Vibhu025
+```
 
+## OSINT:gitcom
+```
+In this challenge we have to stalk vibhu sir xD opened github profile for the username Vibhu025
 saw 2 repositories but cant see the flag,
 used sherlock to find out occurences of Vibhu025 on the internet, checked all hack the box, hackerone, bugcrowd,linkedin...etc. didnt find anything.
 Went back to github and saw the commit messages for the repos,
 found the flag in the code repo commit messages:
-	s3ntinel{g1t_c0mm1t_m3ss@g3s}
+s3ntinel{g1t_c0mm1t_m3ss@g3s}
+```
 
-Mountains
-
+## OSINT:Mountains
+```
 we are given a picture of a mountain. viewed the exif data for the picture and found the coordinates: 35.3606247,138.7186086
 so google my good friend find this place for me, google gave mount fuji, the flag format is given int he question so:
-	s3ntinel{mount_fuji}
-
-	Crypto
-CHAI NA
+s3ntinel{mount_fuji}
+```
+## Crypto:CHAI NA
+```
 the given text is base64 encoded decode it, we get some chinese language so use google translate: China has Chinese, 
 so s3ntinel{China_has_Chinese}
+```
 
-
-QBQB: We are given a qr code but it looks inverted so inverted it and used google lens to scan the qr code, got 
+## Crypto:QBQB
+```
+We are given a qr code but it looks inverted so inverted it and used google lens to scan the qr code, got 
 
 zooozzoo zzoozzoo zoozoooz zooozozz zoozozzo zoozoooz zoozzozo zoozoozz zoooozoo zoozzzoz zzoozzzo zoozoooz zzoozozz zooozzoz zoooozzo zozooooo zoozzzoo 
 zzoozzzz zoozzozz zzoozzoo zozooooo zoozozzo zooozzoo zozooooo zoozzooz zooozozo zoozoooz zooooozo
@@ -57,10 +67,10 @@ replaced z with 1 and o with 0 got binary data tried to convert it to text but f
 got the flag.
 
 s3ntinel{b1n4ry_c0d3_is_fun}
+```
 
-
-Bonjour
-
+## Crypto:Bonjour
+```
 the french text on google translate gives : all you need is a dozen and some knowledge of French.
  
 so the text which we want to ge the flag from is : r4egiesc{x4l,zùf^p2ny4fç2rçrp5fl}
@@ -69,13 +79,14 @@ so simply keyboard shift cipher
 
     e3zfuzqx{w3knamdpo1bt3d_1e_eo4dk}
 
-
 Now lets try Rot12
 it didnt work, then rot 13 didnt work, rot14 it worked!    
     s3ntinel{k3yboardc1ph3r_1s_sc4ry}
+```
 
-
-Saber:  First did rot13 of VG'F NYJNLF ORGGRE GB XRRC GUVATF GUR JNL GURL NER it said leave things like they are, there is also another string in the question
+## Crypto:Saber
+```
+First did rot13 of VG'F NYJNLF ORGGRE GB XRRC GUVATF GUR JNL GURL NER it said leave things like they are, there is also another string in the question
 
 IRFELVALECUIN
 
@@ -84,18 +95,21 @@ typically curved blade.
 
 so fencing is the keyword here so searched on decodefr website and found Rail Fence (Zig-Zag) Cipher
 so i used the automatic decryption feature and there were many results, ILUVRAILFENCE this was the flag. s3ntinel{ILUVRAILFENCE}
+```
 
-
-	Reverse Engineering
-Secret: Read the challenge description Go pack your bags take a UPs and an Xbox home this means  UPX so googel it, then we unpack the file using upx -d comsecret
+## Reverse Engineering:Secret
+```
+Read the challenge description Go pack your bags take a UPs and an Xbox home this means  UPX so googel it, then we unpack the file using upx -d comsecret
 
 then use radare2  The aa command analyzes all flags starting with sym. (symbols/function names) and entry0 (i.e. _start, the program’s entry point).
 
 the use VV to enter into graph mode analyse the graph we find thhe secret key is S3cr3t_k3y. Do ./comsecret S3cr3t_k3y and there is our flag!  
 
 s3ntinel{S3cr3t_k3y}
+```
 
-Login:
+## Reverse Engineering: Login
+```
 Opened the file in a text editor, then observed username is 0n3_W4rM and the password is zLl1ks_d4m_T0g_I 
 But it said password is wrong.And in the question its given that Nothing is the right way around. so reversed the password.
 'I_g0T_m4d_sk1lLz'
@@ -108,8 +122,10 @@ root@Kali-Linux:~# ./Downloads/login 0n3_W4rM I_g0T_m4d_sk1lLz
 Welcome back!
 s3ntinel{I_g0T_m4d_sk1lLz}
 root@Kali-Linux:~# 
- 
-Shift's Over: i wasn't able to complete the challenge but i managed to solve one part of it.
+``` 
+## Reverse Engineering: Shift's Over
+```
+i wasn't able to complete the challenge but i managed to solve one part of it.
 
 First we use rabin2
 
@@ -137,16 +153,15 @@ root@Kali-Linux:~/Downloads# ./Shift_over
 s3ntinel{118 105 111 101 95 111 97 104 97 108 113 112 }
 Well finally the code is complete!!! It took only ten more minutes but at last! Shift's over! Its all about the time now ;)
 So now some shift cipher probably but i wasn't able to crack it :P.
+```
 
-
-
-Devil's Shop
+## Web: Devil's Shop
+```
 simple jwt challenge , use burpsuite get the token,  go to jwt.io edit priveledge to Admin as stated in the comments first letter is capital letter
 then copy the new token and modify in burp and get the flag.  s3entinel{jwt_are_imp0rt4nt} 
-
-
-	Series
-
+```
+## Series
+```
 inspect the page.
 			            <!--<tr> I promise to remove this in next update
                                     <td class="column1">Now start crawling like a robot</td>
@@ -324,7 +339,27 @@ Warning: Only 2 candidates left, minimum 4 needed for performance.
 1g 0:00:00:51 DONE (2020-06-21 16:55) 0.01951g/s 279892p/s 279892c/s 279892C/sa6_123..*7¡Vamos!
 Session completed
 and the cracked password is the flag 7. s3ntinel{computer2008}
+```
 
-
-Feedback form:
+## Feedback form:
+```
 s3ntinel{f33db@ck_!s_th3_br3@kf@st_0f_ch@mp!0ns}
+```
+
+## Find us:
+```
+Visited cybersentinalupes on instagram. Found the flag on their first Post's description.
+s3ntinel{h3r3_1t_@ll_b3g1n}
+```
+
+## Keys:
+```
+Extract the private key part from the keys.txt and save it in privkey.txt
+Base64 decode the long string and save it in blob.txt
+	echo"eMF6BMePpVffIkplIR5cBJCb182ktJc7x4jyyWI8I5ODb4LYohSIxHSkd08M1xzebq1rzDdVamK2HNOKyMlpdbhJaQHMiuDJHlInHTIN0NWq10FBuXFwNr0XLFaTSvIRJDUDRuS+FaBI89Xa26ON/1Cffzi6dAGVmBBlstyMKwg=" | base64 -d > blob.txt
+
+Use openssl to get the flag
+
+openssl rsautils -decrypt -inkey privkey.txt -in blob.txt
+s3ntinel{Publ1c_pr1v@t3_k3ys_sh0uld_b3_k3pt_s@f3}
+```
